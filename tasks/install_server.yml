@@ -1,0 +1,44 @@
+---
+- name: SERVER | Copy systemd service file
+  template:
+    src: devpi-server.service.j2
+    dest: "{{ devpi_folder_systemd }}/devpi-server.service"
+    mode: 0644
+    owner: "{{ devpi_user }}"
+    group: "{{ devpi_group }}"
+
+- name: SERVER | Create systemd service symlink
+  file:
+    src: "{{ devpi_folder_systemd }}/devpi-server.service"
+    dest: "{{ devpi_os_folder_systemd }}/devpi-server.service"
+    state: link
+
+- name: SERVER | Initialize server
+  block:
+    - name: SERVER | Execute Init command
+      shell: |
+        devpi-server --init --serverdir={{ devpi_folder_home }} &> {{ devpi_folder_home }}/server_init.log
+      args:
+        creates: "{{ devpi_folder_home }}/.nodeinfo"
+    - name: SERVER | Server version info
+      shell: |
+        devpi-server --version > {{ devpi_folder_home}}/.serverversion
+      args:
+        creates: "{{ devpi_folder_home }}/.serverversion"
+
+- name: SERVER | Ensure devpi server file permissions
+  with_items:
+    - "{{ devpi_folder_home }}/.nodeinfo"
+    - "{{ devpi_folder_home }}/.sqlite"
+    - "{{ devpi_folder_home }}/.serverversion"
+  file:
+    path: "{{ item }}"
+    state: file
+    owner: "{{ devpi_user }}"
+    group: "{{ devpi_group }}"
+
+- name: SERVER | Enable systemd service
+  systemd:
+    name: devpi-server
+    state: started
+    enabled: yes

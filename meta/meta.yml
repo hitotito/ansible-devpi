@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  role_name: devpi
+  author: Hitoshi Okonogi
+  description: role to install & manage devpi
+  license: MIT
+  min_ansible_version: 2.2
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+  galaxy_tags:
+    - devpi
+    - pypi
+    - proxy

@@ -1,0 +1,12 @@
+---
+
+- name: Install devpi common
+  import_tasks: install_common.yml
+  tags:
+    - always
+  
+- name: Install devpi server
+  import_tasks: install_server.yml
+  when: "'server' in devpi_components"
+  tags:
+    - devpi_server

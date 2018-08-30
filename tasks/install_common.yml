@@ -1,0 +1,33 @@
+---
+- name: COMMON | Ensure devpi group exists
+  group:
+    name: "{{ devpi_group }}"
+    state: present
+
+- name: COMMON | Ensure devpi user exists
+  user:
+    name: "{{ devpi_user }}"
+    state: present
+
+- name: COMMON | Create directory structure
+  file:
+  with_items:
+    - "{{ devpi_folder_home }}"
+    - "{{ devpi_folder_systemd }}"
+      # - "{{ devpi_os_folder_pid }}"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ devpi_user }}"
+    group: "{{ devpi_group }}"
+
+- name: COMMON | Install pip
+  apt:
+    name: python-pip
+    state: present
+
+- name: COMMON | Install devpi package
+  pip:
+    name: devpi
+    state: present

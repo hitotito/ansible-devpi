@@ -1,0 +1,11 @@
+---
+devpi_user: devpi
+devpi_group: devpi
+
+devpi_os_folder_systemd: /etc/systemd/system
+# devpi_os_folder_pid: /var/run/devpi
+
+devpi_folder_home: /srv/devpi
+devpi_folder_systemd: /srv/devpi/systemd
+
+devpi_components: []
