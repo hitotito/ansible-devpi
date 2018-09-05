@@ -7,9 +7,10 @@ Type=simple
 PIDFile={{ devpi_folder_home }}/.xproc/devpi-server/xprocess.PID
 Restart=always
 ExecStartPre=/bin/sleep 2
-ExecStart=/usr/local/bin/devpi-server --start --serverdir={{ devpi_folder_home }}
+ExecStart=/usr/local/bin/devpi-server --start --serverdir={{ devpi_folder_home }} --host={{ devpi_host }} --port={{ devpi_port }}
 ExecStop=/usr/local/bin/devpi-server --stop --serverdir={{ devpi_folder_home }}
 User={{ devpi_user }}
 SuccessExitStatus=SIGKILL
 
 [Install]
+WantedBy=multi-user.target

@@ -6,12 +6,16 @@
     mode: 0644
     owner: "{{ devpi_user }}"
     group: "{{ devpi_group }}"
+  notify:
+    - Restart devpi-server
 
 - name: SERVER | Create systemd service symlink
   file:
     src: "{{ devpi_folder_systemd }}/devpi-server.service"
     dest: "{{ devpi_os_folder_systemd }}/devpi-server.service"
     state: link
+  notify:
+    - Restart devpi-server
 
 - name: SERVER | Initialize server
   block:
@@ -37,7 +41,7 @@
     owner: "{{ devpi_user }}"
     group: "{{ devpi_group }}"
 
-- name: SERVER | Enable systemd service
+- name: SERVER | Ensure devpi-server is started
   systemd:
     name: devpi-server
     state: started

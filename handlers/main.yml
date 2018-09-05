@@ -1,0 +1,5 @@
+---
+- name: Restart devpi-server
+  systemd:
+    name: devpi-server
+    state: restarted

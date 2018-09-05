@@ -9,3 +9,6 @@ devpi_folder_home: /srv/devpi
 devpi_folder_systemd: /srv/devpi/systemd
 
 devpi_components: []
+
+devpi_host: "localhost"
+devpi_port: 3141
