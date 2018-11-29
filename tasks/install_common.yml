@@ -10,7 +10,6 @@
     state: present
 
 - name: COMMON | Create directory structure
-  file:
   with_items:
     - "{{ devpi_folder_home }}"
     - "{{ devpi_folder_systemd }}"
@@ -26,6 +25,7 @@
   apt:
     name: python-pip
     state: present
+    update_cache: true
 
 - name: COMMON | Install devpi package
   pip:
